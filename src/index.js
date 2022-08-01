@@ -1,5 +1,6 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
+import {fetchCountries} from './js/fetchCountries.js';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -11,11 +12,9 @@ function onInput(evt){
     const queryValue = evt.target.value.trim()
     console.log(queryValue);
 
-    fetch(`https://restcountries.com/v3.1/name/${queryValue}?fields=name,capital,population,flags,languages`)
-    .then(responce => responce.json())
+    fetchCountries(queryValue)
     .then(data => {
         console.log(data);
         // console.log(data[0].capital);
     })
 }
-
