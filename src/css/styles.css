@@ -34,3 +34,8 @@ body {
   height: auto;
   margin-right: 10px;
 }
+
+.country-about{
+  display: flex;
+  align-items: center;
+}
