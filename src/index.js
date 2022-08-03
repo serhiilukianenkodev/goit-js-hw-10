@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 import {fetchCountries} from './js/fetchCountries.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const DEBOUNCE_DELAY = 1000;
+const DEBOUNCE_DELAY = 300;
 
 const refs = {
     inputEl: document.querySelector('#search-box'),
@@ -18,28 +18,29 @@ refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY))
 function onInput(evt){
     const queryValue = evt.target.value.trim()
     // console.log(queryValue);
+    // if (!queryValue) {return
+        
+    // }
 
     fetchCountries(queryValue)
     .then(data => {
        
         if (data.length === 1) {
-            refs.countryListEl.innerHTML = '';
-            showCountry(data[0])
-            return
+            clearElems();
+            showCountry(data[0]);
+            return;
         }
 
         if (data.length > 10) {
             Notify.info('Too many matches found. Please enter a more specific name.');
-            refs.countryListEl.innerHTML = '';
-            refs.countryInfoEl.innerHTML = '';         
+            clearElems()
             return}
 
         refs.countryInfoEl.innerHTML = '';
         showCountriesList(data);
 }).catch(error => {
     Notify.failure('Oops, there is no country with that name')
-    refs.countryListEl.innerHTML = '';
-    refs.countryInfoEl.innerHTML = '';
+    clearElems()
 })
 }
 
@@ -70,4 +71,9 @@ function showCountry(country){
 // console.log(markup);
 refs.countryInfoEl.innerHTML = markup;
 // console.log(refs.countryInfoEl);
+}
+
+function clearElems() {
+    refs.countryListEl.innerHTML = '';
+    refs.countryInfoEl.innerHTML = '';
 }
