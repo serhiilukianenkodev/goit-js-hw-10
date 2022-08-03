@@ -16,6 +16,11 @@ refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY))
 function onInput(evt){
     const queryValue = evt.target.value.trim()
 
+    if (!queryValue) {
+        clearElems()
+        return        
+    }
+
     fetchCountries(queryValue)
     .then(data => {
        
