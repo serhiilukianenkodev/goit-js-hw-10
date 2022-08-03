@@ -35,7 +35,7 @@ function onInput(evt){
             clearElems()
             return}
 
-        refs.countryInfoEl.innerHTML = '';
+        clearElems();
         showCountriesList(data);
     }).catch(error => {
     Notify.failure('Oops, there is no country with that name')
@@ -56,11 +56,11 @@ function showCountriesList(data){
 
 function showCountry(country){
     // console.log(country);
-    const {flags, name, capital, languages, population} = country
+    const {flags: {svg}, name: {official}, capital, languages, population} = country
     const markup = `
     <div class = "country-about">
-        <img src="${flags.svg}" alt="flag of ${name.official}" class = "country-img">
-        <p class="country">${name.official}</p>
+        <img src="${svg}" alt="flag of ${official}" class = "country-img">
+        <p class="country">${official}</p>
     </div>
     <p><span>Capital: </span>${capital}</p>
     <p><span>Population: </span>${population}</p>
